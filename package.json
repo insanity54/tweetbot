@@ -1,0 +1,28 @@
+{
+  "name": "tweetbot",
+  "version": "0.0.1",
+  "description": "Every day, tweet a random eBay item along with rover link",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insanity54/tweetbot.git"
+  },
+  "author": "Chris Grimmett <chris@grimtech.net>",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/insanity54/tweetbot/issues"
+  },
+  "homepage": "https://github.com/insanity54/tweetbot#readme",
+  "dependencies": {
+    "@grimtech/envimport": "^0.0.1",
+    "@hendt/ebay-api": "^1.4.2",
+    "debug": "^4.3.1",
+    "dotenv": "^8.2.0",
+    "ebay-node-api": "^2.8.9",
+    "ebay-node-client": "^0.0.10",
+    "twit": "^2.2.11"
+  }
+}
