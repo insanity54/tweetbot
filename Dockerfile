@@ -2,7 +2,7 @@ FROM node:15-alpine
 
 
 # set the timezone
-RUN apk install tzdata
+RUN apk add tzdata
 ENV TZ="America/Los_Angeles"
 RUN ls /usr/share/zoneinfo && \
   cp /usr/share/zoneinfo/America/Los_Angeles /etc/localtime && \
