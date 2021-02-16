@@ -1,10 +1,24 @@
 
-
+const argv = require('yargs/yargs')(process.argv.slice(2)).argv;
 const { getRandomCardListings, pluckInterestingData } = require('./ebay');
+const { doMakeTweet } = require('./twitter');
+const envImport = require('@grimtech/envimport');
+const schedule = envImport('TWEET_SCHEDULE');
+const scheduler = require('node-schedule');
+
 
 const main = (async () => {
+  const cards = await getRandomCardListings(1);
+  const { image, title, url } = pluckInterestingData(cards)[0];
+  const id = await doMakeTweet(`${title}\n${url}`, image);
+  console.log(`https://twitter.com/ebay_sbtp/status/${id}`);
+})
 
-  const cards = await getRandomCardListings(7);
-  const plucked = pluckInterestingData(cards);
-  console.log(plucked);
-})()
+
+
+if (argv.oneshot) {
+  main();
+} else {
+  console.log(`Tweetbot is running using schedule definition ${schedule}`);
+  scheduler.scheduleJob(schedule, main);
+}

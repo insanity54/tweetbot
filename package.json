@@ -1,10 +1,11 @@
 {
   "name": "tweetbot",
-  "version": "0.0.1",
-  "description": "Every day, tweet a random eBay item along with rover link",
+  "version": "1.0.0",
+  "description": "Tweet a random eBay item along with an image and rover link",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -18,11 +19,11 @@
   "homepage": "https://github.com/insanity54/tweetbot#readme",
   "dependencies": {
     "@grimtech/envimport": "^0.0.1",
-    "@hendt/ebay-api": "^1.4.2",
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "ebay-node-api": "^2.8.9",
-    "ebay-node-client": "^0.0.10",
-    "twit": "^2.2.11"
+    "node-schedule": "^2.0.0",
+    "twitter-lite": "^1.1.0",
+    "yargs": "^16.2.0"
   }
 }
