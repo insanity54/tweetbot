@@ -20,5 +20,5 @@ if (argv.oneshot) {
   main();
 } else {
   const job = scheduler.scheduleJob(schedule, main);
-  console.log(`Tweetbot is running using schedule definition ${schedule}. Next invocation is at ${job.nextInvocation()}`);
+  console.log(`Tweetbot is running using schedule definition ${schedule}.\nNext invocation is at ${job.nextInvocation()}`);
 }
