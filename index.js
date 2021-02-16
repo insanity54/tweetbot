@@ -19,6 +19,6 @@ const main = (async () => {
 if (argv.oneshot) {
   main();
 } else {
-  console.log(`Tweetbot is running using schedule definition ${schedule}`);
-  scheduler.scheduleJob(schedule, main);
+  const job = scheduler.scheduleJob(schedule, main);
+  console.log(`Tweetbot is running using schedule definition ${schedule}. Next invocation is at ${job.nextInvocation()}`);
 }
