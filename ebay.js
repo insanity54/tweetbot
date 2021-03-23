@@ -29,6 +29,7 @@ const randomIntFromInterval = (min, max) => { // min and max included
 }
 
 
+// https://svcs.ebay.com/services/search/FindingService/v1?SECURITY-APPNAME=ChrisGri-sbtp-PRD-3d4ac9777-b6aeed40&OPERATION-NAME=findItemsIneBayStores&SERVICE-VERSION=1.0.0&RESPONSE-DATA-FORMAT=JSON&storeName=SakuraBlossomTradingPost&affiliate.customId=TWTR&affiliate.networkId=9&affiliate.trackingId=5338784863&paginationInput.entriesPerPage=100&keywords=card&itemFilter(0).name=categoryID&itemFilter(0).value=1345&outputSelector(0)=SellerInfo&outputSelector(1)=PictureURLLarge&GLOBAL-ID=EBAY-US
 
 
 const getRandomCardListings = async (howMany) => {
@@ -42,7 +43,8 @@ const getRandomCardListings = async (howMany) => {
     },
     entriesPerPage: totalEntries,
     keywords: 'card',
-    categoryID: '1345'
+    categoryID: '1345',
+    outputSelector: 'PictureURLSuperSize'
   };
   const result = await ebay.findItemsIneBayStores(params);
   if (result[0]['ack'][0] === 'Failure') {
@@ -62,8 +64,11 @@ const getRandomCardListings = async (howMany) => {
 const pluckInterestingData = (cards) => {
   const plucked = [];
   for (var i=0; i<cards.length; i++) {
+    let standardImage = cards[i].pictureURLLarge[0];
+    let superSizeImage = standardImage.replace('$_12', '$_10'); // $_10.jpg is the largest size image available.
     let data = {
-      image: cards[i].pictureURLLarge[0],
+      image: superSizeImage,
+      standardImage: standardImage,
       title: cards[i].title[0],
       url: cards[i].viewItemURL[0],
       id: cards[i].itemId[0]
@@ -72,8 +77,6 @@ const pluckInterestingData = (cards) => {
   }
   return plucked;
 }
-
-
 
 
 
