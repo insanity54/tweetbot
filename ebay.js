@@ -73,6 +73,7 @@ const pluckInterestingData = (cards) => {
       url: cards[i].viewItemURL[0],
       id: cards[i].itemId[0]
     };
+    debug(data);
     plucked.push(data);
   }
   return plucked;
