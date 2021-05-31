@@ -7,6 +7,7 @@ const schedule = envImport('TWEET_SCHEDULE');
 const scheduler = require('node-schedule');
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT || 5000;
 var lastTweet = null;
 var lastRunDate = null;
 
@@ -29,6 +30,9 @@ app.get('/', (req, res) => {
 	}
 })
 
+app.listen(PORT, () => {
+  console.log(`Tweetbot status page listening on ${PORT}`)
+})
 
 if (argv.oneshot) {
   main();
