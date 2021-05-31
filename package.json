@@ -23,6 +23,7 @@
     "debug": "^4.3.1",
     "dotenv": "^8.2.0",
     "ebay-node-api": "^2.8.9",
+    "express": "^4.17.1",
     "node-schedule": "^2.0.0",
     "twitter-lite": "^1.1.0",
     "yargs": "^16.2.0"
