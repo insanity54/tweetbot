@@ -13,15 +13,22 @@ const certId = envImport('EBAY_CERT_ID');
 const devId = envImport('EBAY_DEV_ID');
 const affiliateId = envImport('EBAY_AFFILIATE_ID');
 const customId = envImport('EBAY_AFFILIATE_CUSTOM_ID');
+const clientSecret = envImport('EBAY_CERT_ID');
 
 const eBayApi = require('ebay-node-api');
 let ebay = new eBayApi({
   clientID: appId,
+  clientSecret: clientSecret,
   env: 'PRODUCTION',
   headers: {
     'X-EBAY-SOA-GLOBAL-ID': 'EBAY-US'
+  },
+  body: {
+    grant_type: 'client_credentials',
+    scope: 'https://api.ebay.com/oauth/api_scope'
   }
 })
+
 
 // greets https://stackoverflow.com/a/7228322/1004931
 const randomIntFromInterval = (min, max) => { // min and max included
@@ -33,45 +40,51 @@ const randomIntFromInterval = (min, max) => { // min and max included
 
 
 const getRandomCardListings = async (howMany) => {
-  const totalEntries = 100;
+
+  const totalEntries = 200;
   const params = {
-    storeName: 'SakuraBlossomTradingPost',
-    affiliate: {
-      customId: customId,
-      networkId: 9,
-      trackingId: affiliateId
-    },
-    entriesPerPage: totalEntries,
-    keywords: 'card',
-    categoryID: '1345',
-    outputSelector: 'PictureURLSuperSize'
+    filter: 'sellers:{sakurablossomtradingpost}',
+    keyword: 'card',
+    categoryId: '1345',
   };
-  const result = await ebay.findItemsIneBayStores(params);
-  if (result[0]['ack'][0] === 'Failure') {
-    throw new Error(JSON.stringify(result));
-  }
-  const items = result[0].searchResult[0].item;
-  
-  const getRandomListing = (ls) => ls[(randomIntFromInterval(1, totalEntries)-1)];
-  let selected = [];
-  for (var i=0; i<howMany; i++) {
-    selected.push(getRandomListing(items));
+  await ebay.getAccessToken();
+
+  const result = await ebay.searchItems(params);
+  const res = JSON.parse(result);
+  const items = res.itemSummaries;
+
+  const total = res.total;
+  let selectedListingIndices = [];
+  for (var i = 0; i < howMany; i++) {
+    selectedListingIndices.push(randomIntFromInterval(1, total)-1);
   }
 
-  return selected;
+  let selectedItems = [];
+  for (const i of selectedListingIndices) {
+    const rP = Object.assign({}, params, {
+      limit: '1',
+      offset: i,
+    })
+    const res = await ebay.searchItems(rP);
+    const r = JSON.parse(res);
+    const item = r.itemSummaries[0];
+    selectedItems.push(item);
+  }
+
+  return selectedItems;
 }
 
 const pluckInterestingData = (cards) => {
   const plucked = [];
   for (var i=0; i<cards.length; i++) {
-    let standardImage = cards[i].pictureURLLarge[0];
-    let superSizeImage = standardImage.replace('$_12', '$_10'); // $_10.jpg is the largest size image available.
+    let standardImage = cards[i]['image']['imageUrl'];
+    let superSizeImage = cards[i]['thumbnailImages'][0]['imageUrl'];
     let data = {
       image: superSizeImage,
       standardImage: standardImage,
-      title: cards[i].title[0],
-      url: cards[i].viewItemURL[0],
-      id: cards[i].itemId[0]
+      title: cards[i]['title'],
+      url: cards[i]['itemHref'],
+      id: cards[i]['legacyItemId']
     };
     debug(data);
     plucked.push(data);
