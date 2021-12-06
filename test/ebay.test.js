@@ -15,6 +15,7 @@ describe('ebay', () => {
 			expect(listings1).to.have.lengthOf(howMany1);
 			expect(listings2).to.have.lengthOf(howMany2);
 			expect(listings1[0]).to.have.property('thumbnailImages');
+			expect(listings1[0]).to.have.property('itemWebUrl');
 		});
 	});
 });

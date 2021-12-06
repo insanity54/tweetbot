@@ -83,7 +83,7 @@ const pluckInterestingData = (cards) => {
       image: superSizeImage,
       standardImage: standardImage,
       title: cards[i]['title'],
-      url: cards[i]['itemHref'],
+      url: cards[i]['itemWebUrl'],
       id: cards[i]['legacyItemId']
     };
     debug(data);
