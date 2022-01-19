@@ -4,7 +4,7 @@
   "description": "Tweet a random eBay item along with an image and rover link",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "mocha",
     "start": "node index",
     "deploy": "caprover deploy --caproverName captain-01 --branch main --appName tweetbot"
   },

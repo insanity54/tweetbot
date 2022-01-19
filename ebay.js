@@ -21,7 +21,8 @@ let ebay = new eBayApi({
   clientSecret: clientSecret,
   env: 'PRODUCTION',
   headers: {
-    'X-EBAY-SOA-GLOBAL-ID': 'EBAY-US'
+    'X-EBAY-SOA-GLOBAL-ID': 'EBAY-US',
+    'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${customId},affiliateReferenceId=${affiliateId}`
   },
   body: {
     grant_type: 'client_credentials',
@@ -83,7 +84,7 @@ const pluckInterestingData = (cards) => {
       image: superSizeImage,
       standardImage: standardImage,
       title: cards[i]['title'],
-      url: cards[i]['itemWebUrl'],
+      url: cards[i]['itemAffiliateWebUrl'],
       id: cards[i]['legacyItemId']
     };
     debug(data);
