@@ -78,14 +78,14 @@ const getRandomCardListings = async (howMany) => {
 const pluckInterestingData = (cards) => {
   const plucked = [];
   for (var i=0; i<cards.length; i++) {
-    console.log(cards[i]);
+    debug(cards[i]);
     let standardImage = cards[i]['image']['imageUrl'];
     let superSizeImage = cards[i]['thumbnailImages'][0]['imageUrl'];
     let data = {
       image: superSizeImage,
       standardImage: standardImage,
       title: cards[i]['title'],
-      url: cards[i]['itemAffiliateWebUrl'],
+      url: cards[i]['itemWebUrl'],
       id: cards[i]['legacyItemId']
     };
     debug(data);
