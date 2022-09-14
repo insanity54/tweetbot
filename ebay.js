@@ -8,17 +8,19 @@ const debug = require('debug')('tweetbot');
 
 const envImport = require('@grimtech/envimport');
 
-const appId = envImport('EBAY_APP_ID');
-const certId = envImport('EBAY_CERT_ID');
-const devId = envImport('EBAY_DEV_ID');
-//const affiliateId = envImport('EBAY_AFFILIATE_ID');
-//const customId = envImport('EBAY_AFFILIATE_CUSTOM_ID');
-const clientSecret = envImport('EBAY_CERT_ID');
+const EBAY_APP_ID = process.env.EBAY_APP_ID;
+const EBAY_CERT_ID = process.env.EBAY_CERT_ID;
+const EBAY_DEV_ID = process.env.EBAY_DEV_ID;
+
+if (typeof EBAY_APP_ID === 'undefined') throw new Error('EBAY_APP_ID is not defined');
+if (typeof EBAY_CERT_ID === 'undefined') throw new Error('EBAY_CERT_ID is not defined');
+if (typeof EBAY_DEV_ID === 'undefined') throw new Error('EBAY_DEV_ID is not defined');
+
 
 const eBayApi = require('ebay-node-api');
 let ebay = new eBayApi({
-  clientID: appId,
-  clientSecret: clientSecret,
+  clientID: EBAY_APP_ID,
+  clientSecret: EBAY_CERT_ID,
   env: 'PRODUCTION',
   headers: {
     'X-EBAY-SOA-GLOBAL-ID': 'EBAY-US',

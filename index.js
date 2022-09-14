@@ -31,23 +31,27 @@ const main = (async () => {
   console.log(lastTweet);
 })
 
-app.get('/', (req, res) => {
-	if (new Date().valueOf() - lastRunDate > 86400000) {
-	  // if the last run date is older than 24h
-		res.json({ status: 'FAILED', lastRun: lastRunDate, lastTweet: lastTweet, lastProduct: lastProduct });
-	} else {
-    // the last run date is newer than 24h
-		res.json({ status: 'OK', lastRun: lastRunDate, lastTweet: lastTweet, lastProduct: lastProduct });
-	}
-})
 
-app.listen(PORT, () => {
-  console.log(`Tweetbot status page listening on ${PORT}`)
-})
 
 if (argv.oneshot) {
+  // make a tweet and then exit
   main();
 } else {
+  // long-running service
   const job = scheduler.scheduleJob(schedule, main);
   console.log(`Tweetbot is running using schedule definition ${schedule}.\nNext invocation is at ${job.nextInvocation()}`);
+
+  app.get('/', (req, res) => {
+    if (new Date().valueOf() - lastRunDate > 86400000) {
+      // if the last run date is older than 24h
+      res.json({ status: 'FAILED', lastRun: lastRunDate, lastTweet: lastTweet, lastProduct: lastProduct });
+    } else {
+      // the last run date is newer than 24h
+      res.json({ status: 'OK', lastRun: lastRunDate, lastTweet: lastTweet, lastProduct: lastProduct });
+    }
+  })
+
+  app.listen(PORT, () => {
+    console.log(`Tweetbot status page listening on ${PORT}`)
+  })
 }

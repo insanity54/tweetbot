@@ -5,6 +5,11 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
+[build]
+  [build.args]
+    NODE_VERSION = "16"
+
+
 [env]
   TWEET_SCHEDULE="0 30 * * * *"
 
