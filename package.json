@@ -20,7 +20,7 @@
   "homepage": "https://github.com/insanity54/tweetbot#readme",
   "dependencies": {
     "@grimtech/envimport": "^0.0.1",
-    "debug": "^4.3.1",
+    "debug": "^4.3.4",
     "dotenv": "^8.2.0",
     "ebay-node-api": "^2.8.9",
     "express": "^4.17.1",

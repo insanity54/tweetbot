@@ -11,8 +11,8 @@ const envImport = require('@grimtech/envimport');
 const appId = envImport('EBAY_APP_ID');
 const certId = envImport('EBAY_CERT_ID');
 const devId = envImport('EBAY_DEV_ID');
-const affiliateId = envImport('EBAY_AFFILIATE_ID');
-const customId = envImport('EBAY_AFFILIATE_CUSTOM_ID');
+//const affiliateId = envImport('EBAY_AFFILIATE_ID');
+//const customId = envImport('EBAY_AFFILIATE_CUSTOM_ID');
 const clientSecret = envImport('EBAY_CERT_ID');
 
 const eBayApi = require('ebay-node-api');
@@ -22,7 +22,7 @@ let ebay = new eBayApi({
   env: 'PRODUCTION',
   headers: {
     'X-EBAY-SOA-GLOBAL-ID': 'EBAY-US',
-    'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${customId},affiliateReferenceId=${affiliateId}`
+    //'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${customId},affiliateReferenceId=${affiliateId}`
   },
   body: {
     grant_type: 'client_credentials',
