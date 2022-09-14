@@ -95,7 +95,6 @@ const doMakeTweet = async (message, imageUrl) => {
 
 	try {
 		const verif = await apiClient.get('account/verify_credentials')
-		debug(verif)
 	} catch (e) {
 		console.error('error while attempting to verify creds')
 		console.error(e)

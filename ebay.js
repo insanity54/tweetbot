@@ -16,6 +16,7 @@ if (typeof EBAY_APP_ID === 'undefined') throw new Error('EBAY_APP_ID is not defi
 if (typeof EBAY_CERT_ID === 'undefined') throw new Error('EBAY_CERT_ID is not defined');
 if (typeof EBAY_DEV_ID === 'undefined') throw new Error('EBAY_DEV_ID is not defined');
 
+debug('>>>>>>>>>>>>>>>>>>ey bb grl')
 
 const eBayApi = require('ebay-node-api');
 let ebay = new eBayApi({
@@ -80,7 +81,6 @@ const getRandomCardListings = async (howMany) => {
 const pluckInterestingData = (cards) => {
   const plucked = [];
   for (var i=0; i<cards.length; i++) {
-    debug(cards[i]);
     let standardImage = cards[i]['image']['imageUrl'];
     let superSizeImage = cards[i]['thumbnailImages'][0]['imageUrl'];
     let data = {
@@ -90,7 +90,6 @@ const pluckInterestingData = (cards) => {
       url: cards[i]['itemWebUrl'],
       id: cards[i]['legacyItemId']
     };
-    debug(data);
     plucked.push(data);
   }
   return plucked;

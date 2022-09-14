@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Tweet a random eBay item along with an image and rover link",
   "main": "index.js",
+  "engines": {
+    "node": "^16.0.0"
+  },
   "scripts": {
     "test": "mocha",
-    "start": "node index --oneshot",
+    "dev": "DEBUG='tweetbot' node index --oneshot",
+    "start": "node index",
     "deploy": "caprover deploy --caproverName captain-01 --branch main --appName tweetbot"
   },
   "repository": {
