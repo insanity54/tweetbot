@@ -9,8 +9,7 @@
   "scripts": {
     "test": "mocha",
     "dev": "DEBUG='tweetbot' node index --oneshot",
-    "start": "node index",
-    "deploy": "caprover deploy --caproverName captain-01 --branch main --appName tweetbot"
+    "start": "node index"
   },
   "repository": {
     "type": "git",
@@ -28,7 +27,7 @@
     "dotenv": "^8.2.0",
     "ebay-node-api": "^2.8.9",
     "express": "^4.17.1",
-    "node-schedule": "^2.0.0",
+    "toad-scheduler": "^1.6.1",
     "twitter-lite": "^1.1.0",
     "yargs": "^16.2.0"
   },

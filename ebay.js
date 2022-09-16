@@ -16,7 +16,6 @@ if (typeof EBAY_APP_ID === 'undefined') throw new Error('EBAY_APP_ID is not defi
 if (typeof EBAY_CERT_ID === 'undefined') throw new Error('EBAY_CERT_ID is not defined');
 if (typeof EBAY_DEV_ID === 'undefined') throw new Error('EBAY_DEV_ID is not defined');
 
-debug('>>>>>>>>>>>>>>>>>>ey bb grl')
 
 const eBayApi = require('ebay-node-api');
 let ebay = new eBayApi({
@@ -25,7 +24,6 @@ let ebay = new eBayApi({
   env: 'PRODUCTION',
   headers: {
     'X-EBAY-SOA-GLOBAL-ID': 'EBAY-US',
-    //'X-EBAY-C-ENDUSERCTX': `affiliateCampaignId=${customId},affiliateReferenceId=${affiliateId}`
   },
   body: {
     grant_type: 'client_credentials',

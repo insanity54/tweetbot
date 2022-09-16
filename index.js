@@ -3,24 +3,15 @@ const argv = require('yargs/yargs')(process.argv.slice(2)).argv;
 const { getRandomCardListings, pluckInterestingData } = require('./ebay');
 const { doMakeTweet } = require('./twitter');
 const envImport = require('@grimtech/envimport');
-const scheduler = require('node-schedule');
+const { ToadScheduler, SimpleIntervalJob, AsyncTask } = require('toad-scheduler');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 5000;
 const debug = require('debug')('tweetbot');
 
- // # ┌────────────── second (optional)
- // # │ ┌──────────── minute
- // # │ │ ┌────────── hour
- // # │ │ │ ┌──────── day of month
- // # │ │ │ │ ┌────── month
- // # │ │ │ │ │ ┌──── day of week
- // # │ │ │ │ │ │
- // # │ │ │ │ │ │
- // # * * * * * *
 
+const scheduler = new ToadScheduler();
 
-const schedule = envImport('TWEET_SCHEDULE');
 var lastTweet = null;
 var lastRunDate = null;
 var lastProduct = null;
@@ -50,11 +41,21 @@ if (argv.oneshot) {
   main();
 } else {
   // long-running service
-  const job = scheduler.scheduleJob(schedule, main);
+  const task = new AsyncTask('make a tweet', () => {
+    console.log('Task triggered');
+    return main();
+  }, (err) => {
+    console.error('there was an error while running the task')
+    console.error(err);
+  });
 
-  console.log(`Tweetbot is running using schedule definition ${schedule}.\nNext invocation is at ${job.nextInvocation()}`);
+  const job = new SimpleIntervalJob({ hours: 2, runImmediately: true }, task);
+  scheduler.addSimpleIntervalJob(job);
+
 
   app.get('/', (req, res) => {
+    console.log(`job status: ${job.getStatus()}`);
+
     if (new Date().valueOf() - lastRunDate > 86400000) {
       // if the last run date is older than 24h
       res.json({ status: 'FAILED', lastRun: lastRunDate, lastTweet: lastTweet, lastProduct: lastProduct });
